@@ -8,14 +8,19 @@ const defaultTax = { vat: 21, state: 2}
 
 module.exports = (ctx) => {
     const body = ctx.request.body
+    if (!body.state || !body.productPrice) {
+        return ctx.body = { error: "Required parameters not present" };
+    }
     const taxes = cityTaxes[body.state] ? cityTaxes[body.state] : defaultTax;
 
-    result = calculator(body.productPrice, taxes);
-
     if (body.notifyRegulator) {
-        const regulator = taxRegulator(body.state);
-        regulator.notify();
+        try {
+            const regulator = taxRegulator(body.state);
+            regulator.notify();
+        } catch(error) {
+            return ctx.body = { error: error.message };
+        }
     }
 
-    ctx.body = result;
+    ctx.body = calculator(body.productPrice, taxes);
 };
