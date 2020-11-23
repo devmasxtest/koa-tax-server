@@ -12,8 +12,10 @@ module.exports = (ctx) => {
 
     result = calculator(body.productPrice, taxes);
 
-    // const regulator = taxRegulator(body.state);
-    // regulator.notify();
-    ctx.body = result;
+    if (body.notifyRegulator) {
+        const regulator = taxRegulator(body.state);
+        regulator.notify();
+    }
 
+    ctx.body = result;
 };
