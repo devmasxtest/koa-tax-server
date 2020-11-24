@@ -10,7 +10,7 @@ class GeneralTaxRegulator {
     }
 }
 
-class TaxRegulators {
+class TaxRegulatorFactory {
     constructor(state) {
         this.state = state;
     }
@@ -27,4 +27,4 @@ class TaxRegulators {
     }
 }
 
-module.exports = TaxRegulators;
+module.exports = TaxRegulatorFactory;

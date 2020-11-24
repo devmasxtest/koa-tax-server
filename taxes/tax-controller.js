@@ -1,7 +1,7 @@
 const Calculator = require('./calculator')
-const TaxRegulator = require('./tax-regulators')
+const TaxRegulatorFactory = require('./tax-regulators')
 
-class GetTaxController {
+class TaxController {
     process(ctx) {
         const body = ctx.request.body;
         if (!body.state || !body.productPrice) {
@@ -9,9 +9,9 @@ class GetTaxController {
         }
 
         try {
-            const calculatorResult = new Calculator(body.productPrice, body.state).calculate();
+            const calculatorResult = new Calculator().calculate(body.productPrice, body.state);
             if (body.notifyRegulator) {
-                const regulator = new TaxRegulator(body.state).getRegulator();
+                const regulator = new TaxRegulatorFactory(body.state).getRegulator();
                 regulator.notify(calculatorResult);
             }
             return ctx.body = calculatorResult;
@@ -22,4 +22,4 @@ class GetTaxController {
     }
 }
 
-module.exports = GetTaxController;
+module.exports = TaxController;
