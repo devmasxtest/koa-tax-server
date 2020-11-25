@@ -14,7 +14,9 @@ router.get('/', ctx => {
     ctx.body = "Root of project"
 });
 
-router.post('get-tax', getTax);
+router.post('get-tax', (ctx) => {
+    ctx.body = getTax(ctx)
+});
 
 app.use(router.routes());
 

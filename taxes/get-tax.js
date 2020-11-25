@@ -16,21 +16,21 @@ const notifyRegulator = (state, taxes) => {
 };
 
 module.exports = (ctx) => {
-    const body = ctx.request.body
-    if (!body.state || !body.productPrice) {
+    const newCtx = {...ctx}
+    if (!newCtx.request.body.state || !newCtx.request.body.productPrice) {
         return ctx.body = { error: "Required parameters not present" };
     }
-    const taxes = targetTax(body.state);
+    const taxes = targetTax(newCtx.request.body.state);
 
     try {
-        const resultCalculator = calculator(body.productPrice, taxes);
+        const resultCalculator = calculator(newCtx.request.body.productPrice, taxes);
 
-        if (body.notifyRegulator) {
-            notifyRegulator(body.state, resultCalculator);
+        if (newCtx.request.body.notifyRegulator) {
+            notifyRegulator(newCtx.request.body.state, resultCalculator);
         }
-        return ctx.body = resultCalculator;
+        return resultCalculator;
     } catch(error) {
-        return ctx.body = { error: error.message };
+        return { error: error.message };
     }
 
 };
