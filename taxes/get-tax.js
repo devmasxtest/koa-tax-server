@@ -1,8 +1,6 @@
 const taxRegulator = require('./tax-regulators')
 const calculator = require('./calculator')
 
-
-
 const targetTax = (state) => {
     const cityTaxes = {
         "NY": {vat: 23, specific: {city: 1, insurance: 2}, state: 5},
@@ -34,5 +32,4 @@ module.exports = (ctx) => {
     } catch(error) {
         return { error: error.message };
     }
-
 };
