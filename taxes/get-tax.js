@@ -18,7 +18,7 @@ const notifyRegulator = (state, taxes) => {
 module.exports = (ctx) => {
     const newCtx = {...ctx}
     if (!newCtx.request.body.state || !newCtx.request.body.productPrice) {
-        return ctx.body = { error: "Required parameters not present" };
+        return { error: "Required parameters not present" };
     }
     const taxes = targetTax(newCtx.request.body.state);
 
